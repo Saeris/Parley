@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "test": "lerna run test",
+    "prepare": "lerna run prepare",
+    "clean": "del-cli packages/**/dist"
+  },
+  "devDependencies": {
+    "lerna": "^2.2.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

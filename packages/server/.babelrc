@@ -1,0 +1,52 @@
+{
+  "ignore": [
+    "src/**/_TEST_/*.spec.js"
+  ],
+  "plugins": [
+    "inline-dotenv",
+    ["inline-replace-variables", {
+      "ENV": { "type": "node", "replacement": "process.env.NODE_ENV" },
+      "PRISMA_ENDPOINT": { "type": "node", "replacement": "process.env.PRISMA_ENDPOINT" },
+      "PRISMA_SECRET": { "type": "node", "replacement": "process.env.PRISMA_SECRET" },
+      "APP_SECRET": { "type": "node", "replacement": "process.env.APP_SECRET" },
+      "LOGLEVEL": { "type": "node", "replacement": "process.env.LOGLEVEL" }
+    }],
+    ["provide-modules", {
+      "console": ["log", "info", "error", "warn"],
+      "dataloader": "Dataloader"
+    }]
+  ],
+  "presets": [
+    ["env", {
+      "targets": { "node": "6.10" },
+      "useBuiltIns": "usage"
+    }],
+    "stage-0",
+    "flow"
+  ],
+  "env": {
+    "test": {
+      "sourceMaps": "inline",
+      "plugins": [
+        "istanbul",
+        "inline-dotenv",
+        ["inline-replace-variables", {
+          "ENV": { "type": "node", "replacement": "process.env.NODE_ENV" },
+          "LOGLEVEL": { "type": "node", "replacement": "process.env.LOGLEVEL" }
+        }],
+        ["provide-modules", {
+          "dataloader": "Dataloader"
+        }]
+      ],
+      "presets": [
+        "babel-preset-power-assert",
+        ["env", {
+          "targets": { "node": "6.10" },
+          "useBuiltIns": "usage"
+        }],
+        "stage-0",
+        "flow"
+      ]
+    }
+  }
+}
