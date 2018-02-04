@@ -1,19 +1,28 @@
-import { GraphQLServer } from "graphql-yoga"
-import { Prisma } from "prisma-binding"
-import resolvers from "./resolvers"
+import lambdaPlayground from 'graphql-playground-middleware-lambda'
+import server from "@/server"
 
-const server = new GraphQLServer({
-  typeDefs: `src/schema.graphql`,
-  resolvers,
-  context: req => ({
-    ...req,
-    db: new Prisma({
-      typeDefs: `src/generated/prisma.graphql`,
-      endpoint: PRISMA_ENDPOINT, // the endpoint of the Prisma DB service (value is set in .env)
-      secret: PRISMA_SECRET, // taken from database/prisma.yml (value is set in .env)
-      debug: true // log all GraphQL queries & mutations
-    })
+exports.server = async (event, context, response) => {
+  const { path, queryStringParameters: params, httpMethod: method, body: payload, headers: reqHeaders } = event
+
+  let url = path
+  if (params) {
+    const qs = Object.keys(params).map(key => `${key}=${params[key]}`)
+    if (qs.length > 0) url = `${url}?${qs.join(`&`)}`
+  }
+
+  const { statusCode, headers, result: body } = await server.inject({
+    method,
+    url,
+    payload,
+    headers: reqHeaders,
+    validate: false
   })
-})
 
-server.start(() => log(`Server is running on http://localhost:4000`))
+  delete headers[`content-encoding`]
+  delete headers[`transfer-encoding`]
+  response(null, { statusCode, headers, body })
+}
+
+exports.playground = lambdaPlayground({
+  endpoint: `/graphql`
+})

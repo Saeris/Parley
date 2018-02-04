@@ -15,6 +15,8 @@ module.exports = {
   globals: {
     // Environment Variables
     ENV: false,
+    PORT: false,
+    LOCAL: false,
     PRISMA_ENDPOINT: false,
     PRISMA_SECRET: false,
     APP_SECRET: false,

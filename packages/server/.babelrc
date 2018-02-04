@@ -3,9 +3,12 @@
     "src/**/_TEST_/*.spec.js"
   ],
   "plugins": [
+    ["babel-plugin-webpack-alias", { "findConfig": true }],
     "inline-dotenv",
     ["inline-replace-variables", {
       "ENV": { "type": "node", "replacement": "process.env.NODE_ENV" },
+      "PORT": { "type": "node", "replacement": "process.env.PORT" },
+      "LOCAL": { "type": "node", "replacement": "process.env.LOCAL" },
       "PRISMA_ENDPOINT": { "type": "node", "replacement": "process.env.PRISMA_ENDPOINT" },
       "PRISMA_SECRET": { "type": "node", "replacement": "process.env.PRISMA_SECRET" },
       "APP_SECRET": { "type": "node", "replacement": "process.env.APP_SECRET" },
@@ -29,6 +32,7 @@
       "sourceMaps": "inline",
       "plugins": [
         "istanbul",
+        ["babel-plugin-webpack-alias", { "findConfig": true }],
         "inline-dotenv",
         ["inline-replace-variables", {
           "ENV": { "type": "node", "replacement": "process.env.NODE_ENV" },

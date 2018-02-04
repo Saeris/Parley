@@ -1,4 +1,4 @@
-import { getUserId } from "../../../utilities"
+import { getUserId } from "@/utilities"
 
 export const publish = async (parent, { id }, ctx, info) => {
   const userId = getUserId(ctx)

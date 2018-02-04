@@ -1,4 +1,4 @@
-import { getUserId } from '../../../utilities'
+import { getUserId } from '@/utilities'
 
 export const drafts = (parent, args, ctx, info) => {
   const id = getUserId(ctx)
