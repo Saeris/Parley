@@ -36,7 +36,8 @@ module.exports = {
     `react`, // https://github.com/yannickcr/eslint-plugin-react
     `flowtype`, // https://github.com/gajus/eslint-plugin-flowtype
     `import`, // https://github.com/benmosher/eslint-plugin-import
-    `promise` // https://github.com/xjamundx/eslint-plugin-promise
+    `promise`, // https://github.com/xjamundx/eslint-plugin-promise
+    `graphql` // https://github.com/apollographql/eslint-plugin-graphql
   ],
   settings: {
     flowtype: { onlyFilesWithFlowAnnotation: false },
@@ -411,5 +412,8 @@ module.exports = {
     "promise/param-names"                       : 2,
     "promise/prefer-await-to-then"              : 2,
     "promise/prefer-await-to-callbacks"         : 2,
+
+    // graphql
+    "graphql/template-strings"                  : [2, { env: `app`, tagName: `App`, projectName: `app` }, { env: `database`, tagName: `Prisma`, projectName: `database` }]
   }
 }

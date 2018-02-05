@@ -3,7 +3,10 @@ type Post {
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime
+  channel: Channel!
+  title: String
   text: String!
+  type: PostType!
   author: User! @relation(name: "Posts")
   reactions: [Reaction!]!
   with: [Tag!]!
@@ -12,6 +15,12 @@ type Post {
   exclude: [Friend!]!
   media: [Media!]!
   ip: String!
+}
+
+enum PostType {
+  Status
+  Thread
+  Message
 }
 
 type Location {
@@ -42,30 +51,82 @@ enum VisibilityFilter {
   Private
 }
 
+type Server {
+  id: ID! @unique
+  icon: Icon
+  banner: Banner
+  name: String! @unique
+  type: ServerType!
+  channels: [Channel!]!
+  owner: Admin!
+  members: [User!]!
+}
+
+type Icon {
+  image: Media
+}
+
+type Banner {
+  image: Media
+}
+
+type Avatar {
+  image: Media
+}
+
+enum ServerType {
+  FriendsList
+  Profile
+  Community
+}
+
+type Channel {
+  id: ID! @unique
+  server: Server!
+  name: String!
+  type: ChannelType!
+  posts: [Post!]!
+}
+
+enum ChannelType {
+  Inbox
+  Feed
+  Board
+  Chat
+  Voice
+}
+
+type Admin {
+  server: Server!
+  user: User!
+}
+
 type User {
   id: ID! @unique
+  avatar: Avatar
   username: String! @unique
   email: String! @unique
   password: String!
   firstName: String!
   lastName: String!
+  type: UserType! @default(value: "Registered")
   posts: [Post!]! @relation(name: "Posts")
   tags: [Tag!]!
   friends: [Friend!]!
   followers: [User!]! @relation(name: "Followers")
   following: [User!]! @relation(name: "Followers")
-  blocklist: [BlockedUser!]!
+}
+
+enum UserType {
+  Anonymous
+  Registered
+  Verified
 }
 
 type Tag {
   createdAt: DateTime!
   user: User!
   post: Post!
-}
-
-type BlockedUser {
-  createdAt: DateTime!
-  user: User!
 }
 
 type Friend {

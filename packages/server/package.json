@@ -7,23 +7,25 @@
   "author": "Drake Costa <drake@saeris.io> (http://saeris.github.io/)",
   "scripts": {
     "precommit": "lint-staged",
-    "start": "npm run start:dev",
+    "start": "yarn start:dev",
     "start:local": "cross-env LOCAL=true nodemon --watch src src/server.js --exec babel-node --color",
     "start:dev": "cross-env LOCAL=false NODE_ENV=development serverless offline start --dontPrintOutput",
     "start:prod": "cross-env LOCAL=false NODE_ENV=production serverless --stage=production offline start --dontPrintOutput",
     "dev": "npm-run-all --parallel start playground",
     "debug": "nodemon -e js,graphql -x babel-node --inspect -r dotenv/config src/index.js",
-    "deploy": "npm run deploy:dev",
+    "deploy": "yarn deploy:dev",
     "deploy:dev": "cross-env NODE_ENV=development serverless --stage=dev deploy",
     "deploy:prod": "cross-env NODE_ENV=production serverless --stage=production deploy",
     "playground": "graphql playground",
-    "setup": "babel-node setup.js && yarn prisma deploy",
+    "setup": "babel-node setup.js && yarn prisma:deploy",
+    "prisma:deploy": "yarn prisma deploy && yarn prisma:info",
+    "prisma:info": "yarn prisma info",
     "test": "cross-env NODE_ENV=test nyc ava --verbose --color --tap",
     "test:watch": "ava --watch",
     "coverage": "cross-env NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "coverage:report": "cross-env NODE_ENV=test nyc report --color",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "yarn snyk-protect"
   },
   "dependencies": {
     "apollo-server-hapi": "^1.3.2",
@@ -34,6 +36,7 @@
     "date-fns": "^1.28.5",
     "good": "^8.0.1",
     "good-winston": "^4.0.0",
+    "graphql": "^0.12.3",
     "graphql-depth-limit": "^1.1.0",
     "graphql-import": "^0.4.2",
     "graphql-playground-middleware-hapi": "^1.5.1",
@@ -102,6 +105,9 @@
     "tap-nyan": "^1.1.0",
     "webpack": "^3.10.0",
     "webpack-node-externals": "^1.6.0"
+  },
+  "resolutions": {
+    "graphql": "^0.12.3"
   },
   "lint-staged": {
     "src/**/*.{js,jsx}": [
