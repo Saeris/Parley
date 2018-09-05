@@ -44,7 +44,7 @@
     "graphql-query-complexity": "^0.1.2",
     "hapi": "^17.2.0",
     "jsonwebtoken": "8.1.1",
-    "lerna": "^2.2.0",
+    "lerna": "^3.0.0",
     "lodash": "^4.17.5",
     "prisma-binding": "^1.5.3",
     "redis": "^2.8.0",
